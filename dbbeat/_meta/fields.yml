@@ -7,3 +7,27 @@
       required: true
       description: >
         PLEASE UPDATE DOCUMENTATION
+    - name: server
+      type: keyword
+      required: true
+      description: Host de la base de datos
+    - name: port
+      type: integer
+      required: true
+      description: Puerto de la base de datos
+    - name: user
+      type: keyword
+      required: true
+      description: usuario de la base de datos
+    - name: password
+      type: keyword
+      required: true
+      description: contrasenia de la base de datos
+    - name: database
+      type: keyword
+      required: true
+      description: Nombre de la base de datos
+    - name: query
+      type: text
+      required: true
+      description:  query a la base de datos

@@ -38,12 +38,16 @@ func (bt *dbbeat) Run(b *beat.Beat) error {
 
 	var err error
 	bt.client, err = b.Publisher.Connect()
+	
 	if err != nil {
+		logp.Info("error: %s",err)
 		return err
 	}
 
 	ticker := time.NewTicker(bt.config.Period)
-	startConection()
+	startConection(bt.config.Server,bt.config.Port,bt.config.User,bt.config.Password,bt.config.Database)
+	//startConection()
+	
 	for {
 		select {
 		case <-bt.done:
@@ -51,7 +55,8 @@ func (bt *dbbeat) Run(b *beat.Beat) error {
 		case <-ticker.C:
 		}
 		// Read employees
-		producto, err := ReadEmployees()
+		//producto, err := ReadEmployees(bt.config.Query)
+		producto, err := ReadEmployees(bt.config.Query)
 		if err != nil {
 			logp.Error(err)
 		}
@@ -76,7 +81,7 @@ func (bt *dbbeat) Run(b *beat.Beat) error {
 					},
 				}
 				bt.client.Publish(event)
-				logp.Info(fmt.Sprintf("Producto-sucursal (%s %s) enviado",p.uiCodProducto, p.uiCodSucursal))
+				//logp.Info(fmt.Sprintf("Producto-sucursal (%s %s) enviado",p.uiCodProducto, p.uiCodSucursal))
 			}
 		} else {
 			logp.Info("Estas al dia!")

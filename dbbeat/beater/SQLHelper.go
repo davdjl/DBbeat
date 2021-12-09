@@ -11,12 +11,6 @@ import (
 
 var db *sql.DB
 
-var server = "DESKTOP-UBNV5QG"
-var port = 1433
-var user = "usuario_dev"
-var password = "david"
-var database = "SeusInventariosFarmacias"
-
 type Inventario struct {
 	uiCodSucursal         int
 	uiCodProducto         int
@@ -32,16 +26,11 @@ type Inventario struct {
 	cControlCOFEPRIS      string
 }
 
-func main() {
-	startConection()
-	ReadEmployees()
-}
-
-func startConection() {
+//
+func startConection(server string, port int, user string, password string, database string) {
 	// INICIAMOS CONEXION
 	// Build connection string
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;",
-		server, user, password, port, database)
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
 
 	var err error
 
@@ -59,15 +48,15 @@ func startConection() {
 }
 
 // ReadEmployees reads all employee records
-func ReadEmployees() ([]Inventario, error) {
+//query string
+func ReadEmployees(query string) ([]Inventario, error) {
 	ctx := context.Background()
-
 	// Check if database is alive.
 	err := db.PingContext(ctx)
 	if err != nil {
 		return nil, err
 	}
-	tsql := fmt.Sprintf("EXEC spECommerceConsExistenciaSucursalesTres;")
+	tsql := fmt.Sprintf("%s",query)
 
 	// Execute query
 	rows, err := db.QueryContext(ctx, tsql)

@@ -5,6 +5,12 @@
 dbbeat:
   # Defines how often an event is sent to the output
   period: 1s
+  server: "DESKTOP-UBNV5QG"
+  port: 1433
+  user: "usuario_dev"
+  password: "david"
+  database: "SeusInventariosFarmacias"
+  query: "EXEC spECommerceConsExistenciaSucursalesTres;"
 
 # ================================== General ===================================
 
